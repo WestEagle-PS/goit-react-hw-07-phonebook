@@ -8,8 +8,8 @@ import {
 } from 'redux/contacts/contacts-selectors';
 import { getFilter } from 'redux/filter/filter-selectors';
 
-import { addContacts, deleteContacts } from 'redux/contacts/contacts-slice';
-import { setFilter } from 'redux/filter/filter-slice';
+import { addContacts, deleteContacts } from 'redux/contacts/contacts-actions';
+import { setFilter } from 'redux/filter/filter-actions';
 
 import css from './phone-book.module.scss';
 
