@@ -20,7 +20,7 @@ const PhoneBook = () => {
 
   useEffect(() => {
     dispatch(fetchContacts());
-  }, []);
+  }, [dispatch]);
 
   const onAddContacts = ({ name, number }) => {
     const action = addContact({ name, number });
