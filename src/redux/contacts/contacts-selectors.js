@@ -1,7 +1,8 @@
-export const getContacts = store => store.contacts.items;
+export const getContacts = state => state.contacts.items;
 
-export const getFilteredItems = store => {
-  const { contacts, filter } = store;
+export const getFilteredItems = state => {
+  const { contacts, filter } = state;
+
   if (!filter) {
     return contacts.items;
   }

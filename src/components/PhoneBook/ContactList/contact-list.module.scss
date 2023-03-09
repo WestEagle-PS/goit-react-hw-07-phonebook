@@ -11,4 +11,8 @@
   border: 1px solid;
   border-radius: 5px;
   margin-left: 20px;
+
+  &:hover {
+    background-color: rgb(242, 79, 79);
+  }
 }
