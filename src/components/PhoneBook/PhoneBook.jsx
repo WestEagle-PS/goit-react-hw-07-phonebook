@@ -3,24 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import PhoneBlock from './PhoneBlock/PhoneBlock';
 import ContactList from './ContactList/ContactList';
 import ContactForm from './ContactForm/ContactForm';
-
 import {
   fetchContacts,
   deleteContact,
   addContact,
 } from 'redux/contacts/contacts-operations';
 import { setFilter } from 'redux/filter/filter-slice';
-
 import { getFilteredItems } from 'redux/contacts/contacts-selectors';
 import { getFilter } from 'redux/filter/filter-selectors';
-
 import css from './phone-book.module.scss';
 
 const PhoneBook = () => {
   const filter = useSelector(getFilter);
   const filteredContacts = useSelector(getFilteredItems);
-  console.log('filteredContacts: ', filteredContacts);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

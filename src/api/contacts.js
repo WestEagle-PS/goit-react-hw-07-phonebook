@@ -7,7 +7,7 @@ const contactsInstance = axios.create({
 
 export const getAllContacts = () => contactsInstance.get('/');
 
-export const addContact = data => {
+export const addContacts = data => {
   return contactsInstance.post('/', data);
 };
 
