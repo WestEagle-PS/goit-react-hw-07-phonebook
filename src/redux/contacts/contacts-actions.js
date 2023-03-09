@@ -1,13 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
 
-export const addContacts = createAction('contacts/add', data => {
-  return {
-    payload: {
-      id: nanoid(),
-      ...data,
-    },
-  };
-});
+export const fetchContactsPending = createAction('contacts/fetch/pending');
+export const fetchContactsFulfilled = createAction('contacts/fetch/fulfilled');
+export const fetchContactsRejected = createAction('contacts/fetch/rejected');
 
-export const deleteContacts = createAction('contacts/delete');
+export const addContactPending = createAction('contacts/add/pending');
+export const addContactFulfilled = createAction('contacts/add/fulfilled');
+export const addContactRejected = createAction('contacts/add/rejected');
+
+export const deleteContactPending = createAction('contacts/delete/pending');
+export const deleteContactFulfilled = createAction('contacts/delete/fulfilled');
+export const deleteContactRejected = createAction('contacts/delete/rejected');

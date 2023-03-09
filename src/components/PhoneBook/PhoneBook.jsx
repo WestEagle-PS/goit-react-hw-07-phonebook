@@ -1,48 +1,34 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PhoneBlock from './PhoneBlock/PhoneBlock';
 import ContactList from './ContactList/ContactList';
 import ContactForm from './ContactForm/ContactForm';
-import {
-  getContacts,
-  getFilteredItems,
-} from 'redux/contacts/contacts-selectors';
-import { getFilter } from 'redux/filter/filter-selectors';
 
-import { addContacts, deleteContacts } from 'redux/contacts/contacts-actions';
+import { fetchContacts, deleteContact, addContact } from 'redux/contacts/contacts-operations';
 import { setFilter } from 'redux/filter/filter-actions';
+
+import { getFilteredItems } from 'redux/contacts/contacts-selectors';
+import { getFilter } from 'redux/filter/filter-selectors';
 
 import css from './phone-book.module.scss';
 
 const PhoneBook = () => {
-  const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-  const filteredCOntacts = useSelector(getFilteredItems);
+  const filteredContacts = useSelector(getFilteredItems);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, []);
+
   const onAddContacts = ({ name, number }) => {
-    if (isDublicate({ name, number })) {
-      return alert(`${name} ${number} is already in contacts`);
-    }
-    const action = addContacts({ name, number });
+    const action = addContact({ name, number });
     dispatch(action);
-  };
-
-  const isDublicate = ({ name, number }) => {
-    const normalizedName = name.toLowerCase();
-    const dublicate = contacts.find(contact => {
-      return (
-        contact.name.toLowerCase() === normalizedName &&
-        contact.number === number
-      );
-    });
-
-    return Boolean(dublicate);
   };
 
   const onDeleteNumber = id => {
-    const action = deleteContacts(id);
-    dispatch(action);
+    dispatch(deleteContact(id));
   };
 
   const handleFilterChange = e => {
@@ -59,16 +45,8 @@ const PhoneBook = () => {
       </PhoneBlock>
       <PhoneBlock title="Contacts">
         <label className={css.label}>Find contacts by name:</label>
-        <input
-          onChange={handleFilterChange}
-          className={css.textField}
-          name="filter"
-          value={filter}
-        />
-        <ContactList
-          contacts={filteredCOntacts}
-          onDeleteNumber={onDeleteNumber}
-        />
+        <input onChange={handleFilterChange} className={css.textField} name="filter" value={filter} />
+        <ContactList contacts={filteredContacts} onDeleteNumber={onDeleteNumber} />
       </PhoneBlock>
     </div>
   );

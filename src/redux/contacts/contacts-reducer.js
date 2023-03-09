@@ -1,13 +1,50 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addContacts, deleteContacts } from './contacts-actions';
+import * as actions from './contacts-actions';
 
-const contactsReducer = createReducer([], builder => {
+const initialState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
+
+const contactsReducer = createReducer(initialState, builder => {
   builder
-    .addCase(addContacts, (state, { payload }) => {
-      state.push(payload);
+    .addCase(actions.fetchContactsPending, state => {
+      state.isLoading = true;
+      state.error = null;
+      return { ...state, isLoading: true, error: null };
     })
-    .addCase(deleteContacts, (state, { payload }) => {
-      return state.filter(item => item.id !== payload);
+    .addCase(actions.fetchContactsFulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.items = payload;
+    })
+    .addCase(actions.fetchContactsRejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    })
+    .addCase(actions.deleteContactPending, state => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(actions.deleteContactFulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.items = state.items.filter(({ id }) => id !== payload);
+    })
+    .addCase(actions.deleteContactRejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    })
+    .addCase(actions.addContactPending, state => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(actions.addContactFulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.items.push(payload);
+    })
+    .addCase(actions.addContactRejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     });
 });
 
